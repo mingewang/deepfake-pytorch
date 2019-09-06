@@ -31,7 +31,7 @@ while (cap.isOpened()) and n<500:
     # n = n + 1
     if ret==True:
         #out.write(frame)
-        if !colab_env:
+        if not colab_env:
           cv2.imshow('frame', frame)
           if cv2.waitKey(1) & 0xFF == ord('q'):
               break
@@ -39,7 +39,7 @@ while (cap.isOpened()) and n<500:
     print(n)
 cap.release()
 out.release()
-if !colab_env:
+if not colab_env:
   cv2.destroyAllWindows()
 
 # # Check if camera opened successfully
