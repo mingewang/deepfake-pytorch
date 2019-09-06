@@ -9,9 +9,13 @@ import sys
 Video_Path = sys.argv[1]
 save_path = sys.argv[2]
 
-colab_env = 'google.colab' in sys.modules
+gui_env = True
+if len(sys.argv) == 4:
+  gui_env = sys.argv[3]
 
-print(" Video_Path is:", Video_Path, " save_path:", save_path, " colab_env: ", colab_env )
+#colab_env = 'google.colab' in sys.modules
+
+print(" Video_Path is:", Video_Path, " save_path:", save_path, " gui_env: ", gui_env )
 
 #Video_Path = 'train/me2.mp4'
 video_Path = os.path.join(os.path.realpath('.'), Video_Path)
@@ -31,7 +35,7 @@ while (cap.isOpened()) and n<500:
     # n = n + 1
     if ret==True:
         #out.write(frame)
-        if not colab_env:
+        if gui_env:
           cv2.imshow('frame', frame)
           if cv2.waitKey(1) & 0xFF == ord('q'):
               break
@@ -39,7 +43,7 @@ while (cap.isOpened()) and n<500:
     print(n)
 cap.release()
 out.release()
-if not colab_env:
+if gui_env:
   cv2.destroyAllWindows()
 
 # # Check if camera opened successfully
