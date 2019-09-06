@@ -1,10 +1,19 @@
+# pip3 install opencv-python
+# python crop_from_video.py trump.mp4 train/trump/
+
 import cv2
 import os
+import sys
 
 
-Video_Path = 'train/me2.mp4'
+Video_Path = sys.argv[1]
+save_path = sys.argv[2]
+
+print(" Video_Path is:", Video_Path, " save_path:", save_path)
+
+#Video_Path = 'train/me2.mp4'
 video_Path = os.path.join(os.path.realpath('.'), Video_Path)
-save_path = os.path.join(os.path.dirname(video_Path), 'me/')
+#save_path = os.path.join(os.path.dirname(video_Path), 'me/')
 
 cap = cv2.VideoCapture(video_Path)
 n=0

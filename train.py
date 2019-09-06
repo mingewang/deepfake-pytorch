@@ -39,6 +39,7 @@ if args.cuda is True:
     device = torch.device('cuda:0')
     cudnn.benchmark = True
 else:
+    device = "cpu"
     print('===> Using CPU to train')
 
 torch.manual_seed(args.seed)
@@ -47,7 +48,8 @@ if args.cuda:
 
 print('===> Loaing datasets')
 images_A = get_image_paths("train/trump_face")
-images_B = get_image_paths("train/me_face")
+#images_B = get_image_paths("train/me_face")
+images_B = get_image_paths("train/cage_face")
 images_A = load_images(images_A) / 255.0
 images_B = load_images(images_B) / 255.0
 #images_A += images_B.mean(axis=(0, 1, 2)) - images_A.mean(axis=(0, 1, 2))
@@ -95,7 +97,12 @@ if __name__ == "__main__":
         warped_A, target_A = toTensor(warped_A), toTensor(target_A)
         warped_B, target_B = toTensor(warped_B), toTensor(target_B)
 
-        if args.cuda:
+        #if args.cuda:
+        #    warped_A = warped_A.to(device).float()
+        #    target_A = target_A.to(device).float()
+        #    warped_B = warped_B.to(device).float()
+        #    target_B = target_B.to(device).float()
+        if True:
             warped_A = warped_A.to(device).float()
             target_A = target_A.to(device).float()
             warped_B = warped_B.to(device).float()
