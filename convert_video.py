@@ -38,7 +38,7 @@ def extract_face(frame):
 def extract_faces(video_path):
     cap = cv2.VideoCapture(video_path)
     n = 0
-    while (cap.isOpened() and n<1000):
+    while (cap.isOpened() and n<700):
         _, frame = cap.read()
         position, croped_face= extract_face(frame)
         #print(croped_face.shape)
