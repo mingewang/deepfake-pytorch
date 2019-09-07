@@ -30,9 +30,17 @@ parser.add_argument('--seed', type=int, default=1, metavar='S',
                     help='random seed (default: 1)')
 parser.add_argument('--log-interval', type=int, default=100, metavar='N',
                     help='how many batches to wait before logging training status')
+parser.add_argument('--src_face', type=str, default="train/trump_face", metavar='N',
+                    help='src faces directory')
+parser.add_argument('--dest_face', type=str, default="train/cage_face", metavar='N',
+                    help='target faces directory')
+parser.add_argument('--gui_env', type=bool, default=False, metavar='N',
+                    help='show gui in opencv')
 
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
+
+print("gui_env:", args.gui_env)
 
 if args.cuda is True:
     print('===> Using GPU to train')
@@ -46,10 +54,15 @@ torch.manual_seed(args.seed)
 if args.cuda:
     torch.cuda.manual_seed(args.seed)
 
+#  find . -size 0 -delete
 print('===> Loaing datasets')
-images_A = get_image_paths("train/trump_face")
-#images_B = get_image_paths("train/me_face")
-images_B = get_image_paths("train/cage_face")
+#images_A = get_image_paths("train/trump_face")
+#images_B = get_image_paths("train/cage_face")
+
+images_A = get_image_paths(args.src_face)
+images_B = get_image_paths(args.dest_face)
+
+
 images_A = load_images(images_A) / 255.0
 images_B = load_images(images_B) / 255.0
 #images_A += images_B.mean(axis=(0, 1, 2)) - images_A.mean(axis=(0, 1, 2))
@@ -168,7 +181,8 @@ if __name__ == "__main__":
         #exit(0)
         figure = np.clip(figure * 255, 0, 255).astype('uint8')
 
-        cv2.imshow("", figure)
-        key = cv2.waitKey(1)
-        if key == ord('q'):
-            exit()
+        if gui_env:
+          cv2.imshow("", figure)
+          key = cv2.waitKey(1)
+          if key == ord('q'):
+              exit()
