@@ -6,23 +6,17 @@ from models import Autoencoder, toTensor, var_to_np
 from image_augmentation import random_warp
 import numpy as np
 
-#video_name = 'train/trump.mp4'
 video_name = 'trump.mp4'
 video_path = os.path.join(os.path.realpath('.'), video_name)
-#/home/hanqing/deepfake/Faceswap-Deepfake-Pytorch/train/liu.mp4
 
 ##################################################
 # Extract faces
 ##################################################
-#device = torch.device('cuda:0')
-
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu") 
 
 def extract_face(frame):
-    #detector = dlib.get_frontal_face_detector()
     dnnFaceDetector = dlib.cnn_face_detection_model_v1("./dlib/mmod_human_face_detector.dat") 
     img = frame
-    #dets = detector(img, 1)
     dets = dnnFaceDetector(img, 1)
     for idx, face in enumerate(dets):
         position = {}
